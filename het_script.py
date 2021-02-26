@@ -56,12 +56,12 @@ def get_date():
     unix = time.time()
     return datetime.utcfromtimestamp(unix).strftime('%Y-%m-%d %H:%M')
 
-def mail_csv(file):
+def mail_csv(file,berigt):
     topsecret = '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'
     message = Mail(
     from_email='stijnvanleeuwen3@gmail.com',
     to_emails='stijnvanleeuwen3@gmail.com',
-    subject='TradinView CSV',
+    subject=berigt,
     html_content='<p>weet ik veel</p>'
     )
 
@@ -95,7 +95,7 @@ for i in range(1000000):
     main.to_csv('hoho.csv')
     time.sleep(1)
     if int(i) % (60*4) == 0:
-        mail_csv('hoho.csv')
+        mail_csv('hoho.csv',f'{i/60} uur')
     
     #print(lol[date])
     time.sleep(60-took)
