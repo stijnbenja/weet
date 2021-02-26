@@ -55,6 +55,7 @@ for i in range(1000000):
     start = time.time()
     date = get_date()
     lol[date] = get_main()
+    print(date, lol[date])
     main = pd.DataFrame(lol).transpose()
     took = time.time() - start
     main.to_csv('hoho.csv')
