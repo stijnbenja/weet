@@ -3,6 +3,12 @@ import time
 from datetime import datetime
 import pandas as pd
 from binance.client import Client
+import base64
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from sendgrid.helpers.mail.content import Content
+from sendgrid.helpers.mail import (Mail, Attachment, FileContent, FileName, FileType, Disposition)
+
 
 def get_binary_ratings(timeframe):
     
@@ -50,6 +56,37 @@ def get_date():
     unix = time.time()
     return datetime.utcfromtimestamp(unix).strftime('%Y-%m-%d %H:%M')
 
+def mail_csv(file):
+    topsecret = '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'
+    message = Mail(
+    from_email='stijnvanleeuwen3@gmail.com',
+    to_emails='stijnvanleeuwen3@gmail.com',
+    subject='TradinView CSV',
+    html_content='<p>weet ik veel</p>'
+    )
+
+    with open('fake.csv', 'rb') as f:
+        data = f.read()
+        f.close()
+
+    encoded_file = base64.b64encode(data).decode()
+
+    attachedFile = Attachment(
+        FileContent(encoded_file),
+        FileName('fake.csv'),
+        FileType('application/csv'),
+        Disposition('attachment')
+    )
+    message.attachment = attachedFile
+    sg = SendGridAPIClient(topsecret)
+    response = sg.send(message)
+    bericht = 'Mail verstuurd! :)' if response.status_code==202 else 'Error met mail'
+    print(bericht)
+
+
+
+
+
 lol = {}
 for i in range(1000000):
     start = time.time()
@@ -59,6 +96,9 @@ for i in range(1000000):
     main = pd.DataFrame(lol).transpose()
     took = time.time() - start
     main.to_csv('hoho.csv')
+    if int(i) % 4 == 0:
+        mail_csv('hoho.csv')
+    
     #print(lol[date])
     time.sleep(60-took)
     
