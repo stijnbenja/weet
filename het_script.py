@@ -94,7 +94,7 @@ for i in range(1000000):
     took = time.time() - start
     main.to_csv('hoho.csv')
     time.sleep(1)
-    if int(i) % (60*4) == 0:
+    if int(i) % (60*6) == 0:
         mail_csv('hoho.csv',f'{i/60} uur')
     
     #print(lol[date])
