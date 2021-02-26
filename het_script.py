@@ -65,7 +65,7 @@ def mail_csv(file):
     html_content='<p>weet ik veel</p>'
     )
 
-    with open('fake.csv', 'rb') as f:
+    with open(file, 'rb') as f:
         data = f.read()
         f.close()
 
@@ -73,7 +73,7 @@ def mail_csv(file):
 
     attachedFile = Attachment(
         FileContent(encoded_file),
-        FileName('fake.csv'),
+        FileName(file),
         FileType('application/csv'),
         Disposition('attachment')
     )
@@ -82,9 +82,6 @@ def mail_csv(file):
     response = sg.send(message)
     bericht = 'Mail verstuurd! :)' if response.status_code==202 else 'Error met mail'
     print(bericht)
-
-
-
 
 
 lol = {}
@@ -96,9 +93,9 @@ for i in range(1000000):
     main = pd.DataFrame(lol).transpose()
     took = time.time() - start
     main.to_csv('hoho.csv')
+    time.sleep(2)
     if int(i) % 4 == 0:
         mail_csv('hoho.csv')
     
     #print(lol[date])
-    time.sleep(60-took)
-    
+    time.sleep(20-took)
