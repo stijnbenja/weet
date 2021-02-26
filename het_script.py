@@ -93,9 +93,9 @@ for i in range(1000000):
     main = pd.DataFrame(lol).transpose()
     took = time.time() - start
     main.to_csv('hoho.csv')
-    time.sleep(2)
-    if int(i) % 4 == 0:
+    time.sleep(1)
+    if int(i) % (60*4) == 0:
         mail_csv('hoho.csv')
     
     #print(lol[date])
-    time.sleep(20-took)
+    time.sleep(60-took)
